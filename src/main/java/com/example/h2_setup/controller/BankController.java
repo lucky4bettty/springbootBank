@@ -23,7 +23,6 @@ import com.example.h2_setup.entity.Todo;
 import com.example.h2_setup.model.BitcoinPriceIndex;
 import com.example.h2_setup.model.Currency;
 import com.example.h2_setup.service.BankService;
-import com.example.h2_setup.service.TodoService;
 import com.google.gson.Gson;
 
 @RestController

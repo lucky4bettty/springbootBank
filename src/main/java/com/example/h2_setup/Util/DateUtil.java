@@ -5,8 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 public final class DateUtil {
 	
-	private DateUtil() { }
-	
 	/**
 	 * 取得目前的日期時間 - 字串
 	 */

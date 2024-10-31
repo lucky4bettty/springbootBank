@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 import lombok.Builder;
 
-@Builder
+
 @Entity
 @Table
 public class Bank {
