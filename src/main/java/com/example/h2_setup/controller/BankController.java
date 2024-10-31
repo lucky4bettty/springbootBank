@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.h2_setup.Util.DateUtil;
@@ -40,6 +41,11 @@ public class BankController {
     @GetMapping("/getBank")
     public List<Bank> getAll () {
     	return service.getAllTodo();
+    }
+    
+    @GetMapping("/getOneBank")
+    public Bank getOne (@RequestParam int id) {
+    	return service.getBankById(id);
     }
   
   	@PutMapping("/editBank")

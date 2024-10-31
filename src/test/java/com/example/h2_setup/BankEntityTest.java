@@ -47,16 +47,36 @@ public class BankEntityTest {
 		bank.setRate("11.1");
 		bank.setUpdateTime(DateUtil.getNow());
 		
+	    System.out.println("加入資訊: ");
+	    System.out.println("ID: " + bank.getId());
+	    System.out.println("代碼: " + bank.getCode());
+	    System.out.println("描述: " + bank.getDescription());
+	    System.out.println("匯率: " + bank.getRate());
+	    System.out.println("更新時間: " + bank.getUpdateTime());
+		
 		bankRepository.save(bank);
 	    Assertions.assertThat(bank.getId()).isGreaterThan(0);
 	}
 	
 	@Test
 	@Order(2)
-	public void getBankTest() {
+	public void getBankAllTest() {
 		List<Bank> bank = bankRepository.findAll();
 		System.out.println(bank.size());
 		assertThat(bank.size()).isGreaterThan(0);	
+	}
+	
+	@Test
+	public void getOneBankTest() {
+		Bank bank = bankRepository.findById(1).orElse(null);
+	    System.out.println("查詢的資訊: ");
+	    System.out.println("ID: " + bank.getId());
+	    System.out.println("代碼: " + bank.getCode());
+	    System.out.println("描述: " + bank.getDescription());
+	    System.out.println("匯率: " + bank.getRate());
+	    System.out.println("更新時間: " + bank.getUpdateTime());
+	    Assertions.assertThat(bank).isNotNull();
+	    Assertions.assertThat(bank.getId()).isEqualTo(1L);
 	}
 	
 	@Test

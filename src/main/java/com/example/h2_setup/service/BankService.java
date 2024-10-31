@@ -1,6 +1,7 @@
 package com.example.h2_setup.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,17 @@ public class BankService {
 	public String deleteTodo(int id) {
 		repository.deleteById(id);
 		return "delete successfully:" + id;
+	}
+
+	public Bank getBankById(int id) {
+		Optional<Bank> data = repository.findById(id);
+		Bank emp = null;
+		if(data.isPresent()) {
+			emp=data.get();
+		}else {
+			throw new RuntimeException("not found : " + id);
+		}
+		return emp;
 	}
 
 }
