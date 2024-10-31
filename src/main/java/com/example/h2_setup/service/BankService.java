@@ -34,7 +34,7 @@ public class BankService {
 
 	public String deleteTodo(int id) {
 		repository.deleteById(id);
-		return id + " : delete successfully !!??";
+		return "delete successfully:" + id;
 	}
 
 }
