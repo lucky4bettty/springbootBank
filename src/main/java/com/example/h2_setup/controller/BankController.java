@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,9 +17,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.h2_setup.Util.DateUtil;
 import com.example.h2_setup.entity.Bank;
 import com.example.h2_setup.entity.Todo;
 import com.example.h2_setup.model.BitcoinPriceIndex;
+import com.example.h2_setup.model.Currency;
 import com.example.h2_setup.service.BankService;
 import com.example.h2_setup.service.TodoService;
 import com.google.gson.Gson;
@@ -29,6 +34,7 @@ public class BankController {
     
     @PostMapping("/addBank")
     public Bank saveTodo (@RequestBody Bank todo) {
+    	todo.setUpdateTime(DateUtil.getNow());
         return service.addTodo(todo);
     }
     
@@ -75,19 +81,30 @@ public class BankController {
             // 使用Gson解析JSON
             Gson gson = new Gson();
             BitcoinPriceIndex bitcoinPriceIndex = gson.fromJson(response.toString(), BitcoinPriceIndex.class);
+            
+            Map<String, Currency> bpiMap = bitcoinPriceIndex.getBpi();
+            
+            for (Map.Entry<String, Currency> entry : bpiMap.entrySet()) {
+                String currencyCode = entry.getKey();
+                Currency currency = entry.getValue();
+                
+                Bank newData = new Bank();
+                newData.setCode(currencyCode);
+                newData.setDescription(currency.getDescription());
+                newData.setRate(currency.getRate());
+                newData.setUpdateTime(DateUtil.getNow());
+                   
+                service.addTodo(newData);
 
-            // 輸出解析後的數據
-            System.out.println("Updated time: " + bitcoinPriceIndex.getTime().getUpdated());
-            System.out.println("USD Rate: " + bitcoinPriceIndex.getBpi().getUSD().getRate());
-            System.out.println("GBP Rate: " + bitcoinPriceIndex.getBpi().getGBP().getRate());
-            System.out.println("EUR Rate: " + bitcoinPriceIndex.getBpi().getEUR().getRate());
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     	
     	
-    	return null;
+    	return service.getAllTodo();
     }
 
 }

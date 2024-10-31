@@ -1,13 +1,20 @@
 package com.example.h2_setup.model;
 
+import java.util.Map;
 
 public class BitcoinPriceIndex {
 	private TimeData time;
     private String disclaimer;
     private String chartName;
-    private Bpi bpi;
+    private Map<String, Currency> bpi;
     
-    public TimeData getTime() {
+	public Map<String, Currency> getBpi() {
+		return bpi;
+	}
+	public void setBpi(Map<String, Currency> bpi) {
+		this.bpi = bpi;
+	}
+	public TimeData getTime() {
 		return time;
 	}
 	public void setTime(TimeData time) {
@@ -24,11 +31,5 @@ public class BitcoinPriceIndex {
 	}
 	public void setChartName(String chartName) {
 		this.chartName = chartName;
-	}
-	public Bpi getBpi() {
-		return bpi;
-	}
-	public void setBpi(Bpi bpi) {
-		this.bpi = bpi;
 	}
 }

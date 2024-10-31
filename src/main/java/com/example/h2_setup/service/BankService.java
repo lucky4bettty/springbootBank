@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.h2_setup.Util.DateUtil;
 import com.example.h2_setup.entity.Bank;
 import com.example.h2_setup.repository.BankRepository;
 
@@ -27,7 +28,7 @@ public class BankService {
 		existingData.setCode(data.getCode());
 		existingData.setDescription(data.getDescription());
 		existingData.setRate(data.getRate());
-		existingData.setUpdateTime(data.getUpdateTime());
+		existingData.setUpdateTime(DateUtil.getNow());
 		return repository.save(existingData);
 	}
 
